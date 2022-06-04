@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/v1")
+@RequestMapping("/digital-banking")
 @SecurityRequirement(name = "digitalBankApi")
 @CrossOrigin("*")
 public class CustomerRestController {

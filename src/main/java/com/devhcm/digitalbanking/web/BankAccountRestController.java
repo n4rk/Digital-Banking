@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/v1")
+@RequestMapping("/digital-banking")
 @CrossOrigin("*")
 @SecurityRequirement(name = "digitalBankApi")
 public class BankAccountRestController {
