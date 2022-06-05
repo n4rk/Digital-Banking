@@ -1,0 +1,98 @@
+<div class="container text-center mx-auto mt-20">
+  <h1 class="text-3xl font-bold text-center mb-5">CUSTOMER ACCOUNTS</h1>
+  <div class="mt-14 rounded-lg bg-gray-50 p-9 w-5/6 shadow-lg mx-auto flex justify-between">
+    <h2 class="text-2xl mt-4 font-bold text-left">{{customer.id}}. <span class="text-cyan-500">{{customer.name}}</span></h2>
+    <div class="mt-4">
+      <p class="bg-gray-200 rounded-full px-5 py-2 text-sm font-semibold text-slate-800 text-center">{{customer.email}}</p>
+    </div>
+    <div class="mt-4">
+      <button (click)="handleDeleteCustomer(customer)" class="text-right">
+        <i class="bi bi-trash focus:outline-none text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-semibold rounded-lg text-lg py-2 px-3 mr-2 mb-2"></i>
+      </button>
+    </div>
+  </div>
+  <div class="rounded-lg bg-gray-50 p-9 mt-8 w-5/6 shadow-lg mx-auto">
+    <ng-container *ngIf="accounts | async as listAccounts; else failureOrLoading">
+  
+      <div class="card">
+        <div class="card-body">
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                ID
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Owner
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Type
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Balance
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Creation Date
+              </th>
+              <th scope="col" class="px-6 py-3 text-center">
+                <i class="bi bi-journals text-lg"></i>
+              </th>
+            </tr>
+            </thead>
+  
+            <tbody>
+            <tr  *ngFor="let a of listAccounts" class="border-b odd:bg-white even:bg-gray-50">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                {{a.id}}
+              </th>
+  
+              <td class="px-6 py-4">
+                {{customer.name}}
+              </td>
+              <td class="px-6 py-4">
+                {{a.type}}
+              </td>
+              <td class="px-6 py-4">
+                {{(a.balance)| number:'1.2-2'}} DH
+              </td>
+              <td class="px-6 py-4">
+               {{a.createdAt | date:"MMM d, y - h:mm a"}}
+              </td>
+              <td class="px-6 py-4 text-right">
+                <button (click)="handleAccountsOperations(a)" class="px-4 py-2 text-white bg-cyan-500 rounded-lg">
+                  Operations
+                </button>
+              </td>
+            </tr>
+  
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+    </ng-container>
+    
+    <ng-template #failureOrLoading>
+      <ng-container *ngIf="errorMessage;else loading">
+        <div class="text-center">
+          <div class="text-8xl mt-20 text-red-600">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+          </div>
+          <h2 class="w-1/2 mt-6 mx-auto text-5xl font-bold mb-4 text-transparent
+                bg-clip-text bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-300">
+                {{errorMessage}} !
+          </h2>
+        </div>
+      </ng-container>
+      <ng-template #loading>
+        <div class="text-center mt-12 animate-spin">
+          <i class="bi bi-arrow-clockwise text-5xl text-cyan-500"></i>
+        </div>
+      </ng-template>
+  
+    </ng-template>
+  
+  
+  </div>
+</div>
+

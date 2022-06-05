@@ -1,0 +1,125 @@
+<div class="container mt-2 mx-auto text-center">
+  <div class="row">
+    <div class="col col-6">
+      <h1 class="text-3xl mt-20 font-bold text-center"><i class="bi bi-bank2 mr-5"></i>ACCOUNT</h1>
+        <div class="mt-5 w-2/3 rounded-lg shadow-sm mx-auto p-9 border-2 border-gray-50">
+          <div>
+          <form [formGroup]="accountFormGroup" (ngSubmit)="handleSearchAccount() ">
+            <div class="hidden">
+              <label class="input-group-text">Account Id :</label>
+              <input type="text" formControlName="accountId" class="bg-gray-100 p-2 rounded-lg">
+              <button class="py-1 px-2 ml-3 bg-cyan-500 text-white rounded-lg">
+                <i class="bi bi-search"></i>  
+              </button>
+            </div>
+          </form>
+          
+          <ng-template #failureOrLoading>
+            <ng-container *ngIf="errorMessage;else loading">
+              <div class="text-center">
+                <div class="text-8xl mt-20 text-red-600">
+                  <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <h2 class="w-1/2 mt-6 mx-auto text-5xl font-bold mb-4 text-transparent
+                      bg-clip-text bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-300">
+                      {{errorMessage}} !
+                </h2>
+              </div>
+            </ng-container>
+            <ng-template #loading>
+              <div class="text-center mt-12 animate-spin">
+                <i class="bi bi-arrow-clockwise text-5xl text-cyan-500"></i>
+              </div>
+            </ng-template>
+          </ng-template>
+
+          <ng-container *ngIf="accounts | async as accountHistory;" >
+
+            <div class="flex flex-no-wrap justify-between">
+            <div class="mb-2 text-left">
+              <label>Account ID : </label>
+              <label><strong>{{accountHistory.accountId}}</strong></label>
+            </div>
+            <div class="mb-2 text-right">
+              <label>Balance : </label>
+              <label><strong class="text-2xl">{{accountHistory.balance | number:'1.2-2'}}</strong><strong> DH</strong></label>
+            </div>
+            </div>
+            <table class="mt-2 w-full text-sm text-left text-gray-500">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3">ID</th>
+                <th scope="col" class="px-6 py-3">Date</th>
+                <th scope="col" class="px-6 py-3">Amount</th>
+                <th scope="col" class="px-6 py-3">Type</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr class="border-b odd:bg-white even:bg-gray-50" *ngFor="let op of accountHistory.accountOperationDTOS">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  {{op.id}}
+                </th>
+                <td class="px-6 py-4">{{op.operationDate | date:"MMM d, y - h:mm a"}}</td>
+                <td class="px-6 py-4">{{op.amount | number:'1.2-2'}} DH</td>
+                <td class="px-6 py-4">{{op.type}}</td>
+              </tr>
+              </tbody>
+            </table>
+
+            <nav class="flex justify-center mt-4">
+              <ul class="inline-flex -space-x-px mt-3">
+                <li *ngFor="let intem of[].constructor(accountHistory.totalPages);let page=index">
+                  <a [ngClass]="page==currentPage?'bg-cyan-50':'border-2'" (click)="goToPage(page)" class="py-2 mr-2 cursor-pointer rounded px-3 text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">{{page}}</a>
+                </li>
+              </ul>
+            </nav>
+
+          </ng-container>
+
+        </div>
+      </div>
+
+    </div>
+      <div class="mt-5 mb-20 w-2/3 rounded-lg shadow-sm border-t-2 border-gray-50 mx-auto p-9">
+
+      <div *ngIf="accounts" class="card">
+        <h1 class="text-2xl font-bold mb-10"><i class="bi bi-journals mr-2"></i>Operations</h1>
+        <div class="card-body">
+          <form method="post" [formGroup]="operationFormGroup" (ngSubmit)="handleAccountOperation()">
+            <div class="flex flex-no-wrap justify-between mb-10">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input mr-2" type="radio" formControlName="operationType" id="debit" value="DEBIT">
+                <label class="form-check-label" for="debit">DEBIT</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input mr-2" type="radio" formControlName="operationType" id="credit" value="CREDIT">
+                <label class="form-check-label" for="credit">CREDIT</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input mr-2" type="radio" formControlName="operationType" id="transfer" value="TRANSFER">
+                <label class="form-check-label" for="transfer">TRANSFER</label>
+              </div>
+            </div>
+
+            <div class="mb-3 flex flex-no-wrap justify-between items-center" *ngIf="operationFormGroup.value.operationType=='TRANSFER'">
+              <label class="form-label flex-none mr-3 w-1/4">Account Destination ID:</label>
+              <input type="text"formControlName="accountDestination" class="bg-gray-100 p-2 flex-auto w-3/4 mt-3 rounded-lg" placeholder="Enter Destination Account...">
+            </div>
+            <div class="mb-3 flex flex-no-wrap justify-between items-center">
+              <label class="flex-none mr-3 w-1/4">Amount : </label>
+              <input type="text"formControlName="amount" class="bg-gray-100 p-2 flex-auto mt-3 w-3/4 rounded-lg" placeholder="Enter Amount...">
+            </div>
+            <div class="mb-3 flex flex-no-wrap justify-between items-center">
+              <label class="flex-none mr-3 w-1/4">Description : </label>
+              <input type="text"formControlName="description" class="bg-gray-100 p-2 flex-auto mt-3 w-3/4 rounded-lg" placeholder="Enter description...">
+            </div>
+            <div class="d-grid">
+              <button class="bg-cyan-500 font-bold py-2 px-4 mt-5 rounded text-white hover:bg-cyan-600 transition ease-in-out"><i class="bi bi-plus-square mr-3"></i>Save Operation</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

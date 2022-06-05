@@ -1,0 +1,35 @@
+<div>
+  <h1 class="text-4xl text-center mt-20 font-extrabold hover:scale-110 transition ease-in-out duration-300 delay-150">
+    New Customer
+  </h1>
+  <div class="shadow-lg mx-auto p-8 w-2/3 rounded-lg">
+
+    <form [formGroup]="newCustomerformGroup" (ngSubmit)="handleSaveCustomer()">
+      <div class="mb-6">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">E-mail</label>
+        <input type="email" id="email" formControlName="email"
+               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5"
+               placeholder="example@gmail.com"
+               >
+        <span class="text-red-500" *ngIf="newCustomerformGroup.controls['email'].touched
+      && newCustomerformGroup.controls['email'].errors
+      && newCustomerformGroup.controls['email'].errors!['required']"></span>
+      </div>
+      <div class="mb-6">
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+        <input  type="text" id="name" formControlName="name" placeholder="Enter customer name"
+               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full p-2.5"
+        >
+        <span class="text-red-500" *ngIf="newCustomerformGroup.controls['name'].touched
+          && newCustomerformGroup.controls['name'].errors
+          && newCustomerformGroup.controls['name'].errors!['required']"></span>
+      </div>
+
+      <button [disabled]="!newCustomerformGroup.valid"
+              class="mt-5 text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-bold rounded-lg text-sm w-full px-5 py-2.5 text-center">
+        Add
+      </button>
+    </form>
+
+  </div>
+</div>

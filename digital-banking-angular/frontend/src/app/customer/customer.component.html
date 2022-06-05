@@ -1,0 +1,75 @@
+<div class="container mx-auto my-2 mb-20">
+  <ng-container *ngIf="customers | async as listCustomers; else failureOrLoading">
+    <div class="card">
+      <div class="mt-20 flex justify-center">
+        <h1 class="text-3xl text-center font-bold my-4"><i class="bi bi-people-fill mr-2"></i> CUSTOMERS</h1>
+      </div>
+      <div class="mt-5 flex justify-center">
+        <a class="border-2 border-emerald-100 bg-emerald-500 hover:bg-emerald-600 hover:border-emerald-300 transition ease-out font-bold rounded-full text-center text-white my-4 px-5 py-2" routerLink="/new-customer"><i class="bi bi-person-plus mr-2"></i> Add New Customer</a>
+      </div>
+      <div class="card-body">
+        <div *ngIf="searchFormGroup">
+          <form class="flex items-end mt-10 mb-10 mx-auto w-1/2" [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+            <div class="relative mr-3 w-full revue-form-group">
+              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <i class="bi bi-search text-gray-500 dark:text-gray-400"></i>
+              </div>
+              <input class="hover:shadow-lg shadow-md transition ease-in-out duration-300 delay-150 revue-form-field bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full pl-10 p-2.5" formControlName="keyword" placeholder="Search..." type="text">
+            </div>
+            <div class="revue-form-actions">
+              <input type="submit" value="Search" class="hover:shadow-2xl shadow-md cursor-pointer text-white bg-cyan-500 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center">
+            </div>
+          </form>
+        </div>
+
+        <div class="grid grid-cols-3 mx-auto">
+            <div *ngFor="let c of customers | async" class="border-t-2 border-gray-100 max-w-sm rounded-2xl p-5 my-5 overflow-hidden shadow-md hover:shadow-xl transition ease-in-out duration-300 delay-100">
+              <div class="flex justify-center px-6 pt-4 pb-2">
+                <i class="bi bi-person-fill p-1 rounded-full border-4 border-black text-5xl text-gray-900"></i>
+              </div>
+              <div class="p-4">
+                <div class="flex justify-between">ID : <span class="font-bold mb-2 text-lg">{{c.id}}</span></div>
+                <div class="flex justify-between">Name : <span class="font-bold mb-2">{{c.name}}</span></div>
+                <div class="flex mt-4 justify-between">
+                  <span class="self-center">Actions :</span>
+                  <div class="flex justify-end">
+                    <button (click)="handleCustomerAccounts(c)" class="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300 font-bold rounded-lg text-sm px-4 py-1 mr-2">
+                      <span>Accounts</span>
+                    </button>
+                    <button #authenticated (click)="handleDeleteCustomer(c)" class="focus:outline-none text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-semibold rounded-lg text-lg px-2 py-1" title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between p-4">
+                <span class="mt-1">Email :</span>
+                <span class="bg-gray-100 rounded-full px-5 py-2 text-sm font-semibold text-slate-800">{{c.email}}</span>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage;else loading">
+      <div class="text-center">
+        <div class="text-8xl mt-20 text-red-600">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <h2 class="w-1/2 mt-6 mx-auto text-5xl font-bold mb-4 text-transparent
+              bg-clip-text bg-gradient-to-r from-cyan-600 via-cyan-500 to-cyan-300">
+              {{errorMessage}} !
+        </h2>
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      <div class="text-center mt-12 animate-spin">
+        <i class="bi bi-arrow-clockwise text-5xl text-cyan-500"></i>
+      </div>
+    </ng-template>
+  </ng-template>
+
+
+</div>

@@ -48,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeHttpRequests().antMatchers("/login/**",
                 "/swagger-ui**",
                 "/swagger-ui/**",
-                "/v3/**",
-                "/v1/**",
+                "/digital-banking/**",
+                "/digital-banking/**",
                 JwtConfig.REFRESH_PATH).permitAll();
         http.addFilter( new JwtAuthenticationFilter( authenticationManagerBean() ) );
         http.addFilterBefore( new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);//@formatter:on

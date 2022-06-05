@@ -210,8 +210,9 @@ public class BankAccountServiceImpl implements BankAccountService {
         Page<AccountOperation> accountOperations=accountOperationRepository.findByBankAccountIdOrderByOperationDateDesc(accountId, PageRequest.of(page, size));
 
         AccountHistoryDTO accountHistoryDTO=new AccountHistoryDTO();
-        List<AccountOperationDTO> accountOperationDTOS = accountOperations.getContent().stream().map(accountOperation ->
-                bankAccountMapper.fromAccountOperation(accountOperation)).collect(Collectors.toList());
+        List<AccountOperationDTO> accountOperationDTOS = accountOperations.getContent().stream().map(
+                accountOperation -> bankAccountMapper.fromAccountOperation(accountOperation)
+        ).collect(Collectors.toList());
         accountHistoryDTO.setAccountOperationDTOS(accountOperationDTOS);
         accountHistoryDTO.setAccountId(accountId);
         accountHistoryDTO.setBalance(bankAccount.getBalance());
