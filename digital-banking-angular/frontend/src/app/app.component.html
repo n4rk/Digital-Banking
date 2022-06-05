@@ -1,12 +1,10 @@
-<nav class="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 shadow-md">
+<nav class="bg-gray-100 px-2 sm:px-4 py-2.5 shadow-md">
   <div class="container flex flex-wrap justify-between items-center mx-auto">
     <div>
-    <a router-link="/" class="flex items-center">
-      <span class="self-center text-xl font-semibold whitespace-nowrap"><img src={{logo}} class="rounded-xl p-1" alt="Bank logo" width="80"/></span>
-    </a>
+      <a router-link="/" class="flex items-center">
+        <span class="self-center text-xl font-semibold whitespace-nowrap"><img src={{logo}} class="rounded-xl p-1" alt="Bank logo" width="80"/></span>
+      </a>
     </div>
-
-
 
     <div class="flex items-center md:order-2">
       <ng-container *ngIf="!user; else authenticated">
@@ -15,7 +13,7 @@
 
       <ng-template #authenticated>
         <button type="button" class="flex mr-3 text-sm rounded-full md:mr-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
-          <div class="transition ease-out-in duration-300 bg-white w-10 h-10 rounded-full overflow-hidden hover:ring-4 hover:ring-gray-300">
+          <div class="transition ease-out-in duration-300 bg-white w-10 h-10 rounded-full overflow-hidden hover:ring-2 hover:ring-cyan-300">
             <img src={{avatar}} alt="profile picture" class="p-2"/>
           </div>
         </button>

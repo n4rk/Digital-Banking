@@ -23,3 +23,5 @@ public class AppRole {
     private String roleName;
 
 }
+
+

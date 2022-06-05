@@ -57,7 +57,7 @@ export class SecurityService {
     }).subscribe({
       next: res => {
         this.user = res;
-        console.log(" -----jdgiy --- - ----- "+res)
+        console.log(" result : "+res)
         this.userSubject.next(res)
       },
       error: err => {

@@ -1,4 +1,4 @@
-<div class="container mx-auto my-2 mb-20">
+<div class="container mx-auto my-2 mb-20" *ngIf="userIsAdmin">
   <ng-container *ngIf="customers | async as listCustomers; else failureOrLoading">
     <div class="card">
       <div class="mt-20 flex justify-center">
@@ -14,10 +14,10 @@
               <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <i class="bi bi-search text-gray-500 dark:text-gray-400"></i>
               </div>
-              <input class="hover:shadow-lg shadow-md transition ease-in-out duration-300 delay-150 revue-form-field bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-cyan-500 focus:border-cyan-500 block w-full pl-10 p-2.5" formControlName="keyword" placeholder="Search..." type="text">
+              <input class="hover:shadow-lg shadow-md transition ease-in-out revue-form-field bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-sm block w-full pl-10 p-2.5" formControlName="keyword" placeholder="Search" type="text">
             </div>
             <div class="revue-form-actions">
-              <input type="submit" value="Search" class="hover:shadow-2xl shadow-md cursor-pointer text-white bg-cyan-500 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300 font-semibold rounded-lg text-sm px-5 py-2.5 text-center">
+              <input type="submit" value="Search" class="shadow-md cursor-pointer text-white bg-cyan-500 hover:bg-cyan-600 font-semibold rounded-sm text-sm px-5 py-2.5 text-center">
             </div>
           </form>
         </div>
@@ -36,7 +36,7 @@
                     <button (click)="handleCustomerAccounts(c)" class="focus:outline-none text-white bg-cyan-500 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-300 font-bold rounded-lg text-sm px-4 py-1 mr-2">
                       <span>Accounts</span>
                     </button>
-                    <button #authenticated (click)="handleDeleteCustomer(c)" class="focus:outline-none text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-semibold rounded-lg text-lg px-2 py-1" title="Delete">
+                    <button *ngIf="userIsAdmin" (click)="handleDeleteCustomer(c)" class="focus:outline-none text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:ring-red-300 font-semibold rounded-lg text-lg px-2 py-1" title="Delete">
                       <i class="bi bi-trash"></i>
                     </button>
                   </div>

@@ -30,21 +30,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {//@formatter:off
+    protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();// csrf protection disabled
         http.formLogin().disable().cors(httpSecurityCorsConfigurer -> {
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-            CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues(); // allow all
-            corsConfiguration.addAllowedMethod("GET"); // add other methods as per your requirement
+            CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+            corsConfiguration.addAllowedMethod("GET");
             corsConfiguration.addAllowedMethod("POST");
             corsConfiguration.addAllowedMethod("PUT");
             corsConfiguration.addAllowedMethod("DELETE");
             source.registerCorsConfiguration("/**",  corsConfiguration);
             httpSecurityCorsConfigurer.configurationSource(source);
         });
-        // disabled cors issues
 
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);// session management disabled
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeHttpRequests().antMatchers("/login/**",
                 "/swagger-ui**",
                 "/swagger-ui/**",
@@ -52,12 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/digital-banking/**",
                 JwtConfig.REFRESH_PATH).permitAll();
         http.addFilter( new JwtAuthenticationFilter( authenticationManagerBean() ) );
-        http.addFilterBefore( new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);//@formatter:on
+        http.addFilterBefore( new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     //@Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception { // to get the AuthenticationManager
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
